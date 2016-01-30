@@ -25,7 +25,7 @@ const assert = require('assert'),
     GaugeJsonFormatter = require('../src/reporting/counter_json_formatter'),
     MetricRegistry = require('../src/metrics/registry'),
     ConsoleJsonPublisher = require('../src/publishers/console_publisher');
-describe('ConsoleJsonPublisher', function () {
+describe('JsonPublisher', function () {
     var publisher = null;
     var registry = null;
     var jsonService = null;

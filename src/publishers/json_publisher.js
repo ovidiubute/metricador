@@ -22,13 +22,28 @@
 "use strict";
 
 var util = require('util');
-var JsonPublisher = require('./json_publisher');
+var MeterPublisher = require('./publisher'),
+    utility = require('../util/utility');
 
-var ConsoleJsonPublisher = function (metricRegistry, jsonFormattingService, publishCallback) {
-    JsonPublisher.call(this, metricRegistry, jsonFormattingService, publishCallback || function (data) {
-        console.log(data);
-    });
+var JsonPublisher = function (metricRegistry, jsonFormattingService, publishCallback) {
+    MeterPublisher.call(this, metricRegistry);
+    this.jsonFormattingService = jsonFormattingService;
+    this.publishCallback = publishCallback;
 };
-util.inherits(ConsoleJsonPublisher, JsonPublisher);
+util.inherits(JsonPublisher, MeterPublisher);
 
-module.exports = ConsoleJsonPublisher;
+JsonPublisher.prototype.publishMetrics = function () {
+    var allMetrics = this.metricRegistry.getNames(),
+        self = this;
+    var result = Object.create(null);
+    allMetrics.forEach(function (metricName) {
+        result = utility.extend(
+            result,
+            self.jsonFormattingService.formatMetric(metricName, self.metricRegistry.getMetric(metricName))
+        );
+    });
+
+    this.publishCallback.call(null, JSON.stringify(result));
+};
+
+module.exports = JsonPublisher;
