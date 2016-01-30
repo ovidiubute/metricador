@@ -22,7 +22,7 @@
 "use strict";
 
 var util = require('util');
-var MeterPublisher = require('././publisher');
+var MeterPublisher = require('./publisher');
 
 var GraphitePublisher = function (graphiteClient) {
     MeterPublisher.call(this);
@@ -31,16 +31,5 @@ var GraphitePublisher = function (graphiteClient) {
 util.inherits(GraphitePublisher, MeterPublisher);
 
 GraphitePublisher.prototype.publishMetrics = function () {
-    //var allMetrics = _.union(
-    //    this.metricRegistry.getCounters(),
-    //    this.metricRegistry.getMeters(),
-    //    this.metricRegistry.getHistograms()
-    //);
-    //this.graphiteClient.write(allMetrics, function (err) {
-    //    if (err) {
-    //        console.log("Failed writing metrics to Graphite!");
-    //    } else {
-    //        console.log("Metrics sent OK to Graphite.");
-    //    }
-    //});
+
 };
