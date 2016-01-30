@@ -21,8 +21,8 @@
 
 "use strict";
 
-const EventEmitter = require('events').EventEmitter;
-const util = require('util');
+var EventEmitter = require('events').EventEmitter;
+var util = require('util');
 
 var MeterPublisher = function (metricRegistry) {
     EventEmitter.call(this);

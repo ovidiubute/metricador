@@ -19,7 +19,7 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-const assert = require('assert'),
+var assert = require('assert'),
     JsonFormattingService = require('../src/reporting/json_formatting_service'),
     HistogramJsonFormatter = require('../src/reporting/histogram_json_formatter'),
     GaugeJsonFormatter = require('../src/reporting/counter_json_formatter'),
