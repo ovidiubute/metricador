@@ -48,7 +48,9 @@ var Histogram = function Histogram(valueIntervals) {
 };
 
 Histogram.prototype.clear = function () {
-    this._values.fill(0);
+    this._values = this._values.map(function () {
+        return 0;
+    });
 };
 
 Histogram.prototype.getIntervals = function () {
