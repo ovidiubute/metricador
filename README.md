@@ -1,3 +1,5 @@
+[![Circle CI](https://circleci.com/gh/ovidiubute/metricador.svg?style=svg)](https://circleci.com/gh/ovidiubute/metricador)
+
 Metricador
 ============
 An all-in-one solution to adding performance metrics to your node.js application.
