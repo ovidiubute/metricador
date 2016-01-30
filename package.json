@@ -1,0 +1,26 @@
+{
+  "name": "metricador",
+  "description": "An all-in-one solution to add performance metrics to your Node.js application.",
+  "version": "0.3.0",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/ovidiubute/metricador.git"
+  },
+  "scripts": {
+    "test": "istanbul cover node_modules/mocha/bin/_mocha -- -R spec"
+  },
+  "author": "Ovidiu Bute <ovidiu.bute@gmail.com>",
+  "license": "MIT",
+  "engines": {
+    "node": ">=0.12.x"
+  },
+  "dependencies": {
+    "graphite": "0.0.6",
+    "zabbix-sender": "^0.2.0"
+  },
+  "devDependencies": {
+    "istanbul": "^0.4.2",
+    "mocha": "^2.3.4",
+    "sinon": "^1.17.3"
+  }
+}
