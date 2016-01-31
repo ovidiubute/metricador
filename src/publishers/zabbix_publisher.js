@@ -35,7 +35,7 @@ var ZabbixPublisher = function (metricRegistry, jsonFormattingService, zabbixSen
     this.sender = zabbixSender;
     var self = this;
     JsonPublisher.call(this, metricRegistry, jsonFormattingService, function (data) {
-        self.sender.write(data.raw, function (err) {
+        self.sender.send(data.raw, function (err) {
             if (err) {
                 console.log('Failed to publish to Zabbix sender. ' + err);
             }
