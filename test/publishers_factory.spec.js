@@ -25,7 +25,8 @@ var assert = require('assert'),
     sinon = require('sinon'),
     factory = require('../src/publishers/factory'),
     ConsoleJsonPublisher = require('../src/publishers/console_publisher'),
-    GraphitePublisher = require('../src/publishers/graphite_publisher');
+    GraphitePublisher = require('../src/publishers/graphite_publisher'),
+    ZabbixPublisher = require('../src/publishers/zabbix_publisher');
 describe('PublishersFactory', function () {
     var metricRegistry = sinon.stub();
 
@@ -42,6 +43,19 @@ describe('PublishersFactory', function () {
 
         it('should return a GraphitePublisher instance connected to the specified Graphite port', function () {
             assert(factory.graphite.json.get(metricRegistry, "example.graphite.org", 8501) instanceof GraphitePublisher);
+        });
+    });
+
+    describe('#zabbix.json.get()', function () {
+        it('should return a ZabbixPublisher instance with default Zabbix client parameters', function () {
+            assert(factory.zabbix.json.get(metricRegistry, {hostname: 'zabbix.example.org'}) instanceof ZabbixPublisher);
+        });
+
+        it('should return a ZabbixPublisher instance connected to the specified Graphite port', function () {
+            assert(factory.zabbix.json.get(metricRegistry, {
+                hostname: 'zabbix.example.org',
+                port: 7802
+            }) instanceof ZabbixPublisher);
         });
     });
 });

@@ -25,23 +25,23 @@ var util = require('util'),
     JsonPublisher = require('./json_publisher');
 
 /**
- * Publish metrics to a Graphite server.
+ * Publish metrics to a Zabbix sender.
  * @param {MetricRegistry} metricRegistry The registry that stores all metrics.
  * @param {JsonFormattingService} jsonFormattingService Service that handles the serialization to JSON
- * @param graphiteClient Client connected to a Graphite server
+ * @param zabbixSender Zabbix Sender
  * @constructor
  */
-var GraphitePublisher = function (metricRegistry, jsonFormattingService, graphiteClient) {
-    this.client = graphiteClient;
+var ZabbixPublisher = function (metricRegistry, jsonFormattingService, zabbixSender) {
+    this.sender = zabbixSender;
     var self = this;
     JsonPublisher.call(this, metricRegistry, jsonFormattingService, function (data) {
-        self.client.write(data.raw, function (err) {
+        self.sender.write(data.raw, function (err) {
             if (err) {
-                console.log('Failed to publish to Graphite server. ' + err);
+                console.log('Failed to publish to Zabbix sender. ' + err);
             }
         });
     });
 };
-util.inherits(GraphitePublisher, JsonPublisher);
+util.inherits(ZabbixPublisher, JsonPublisher);
 
-module.exports = GraphitePublisher;
+module.exports = ZabbixPublisher;
