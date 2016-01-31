@@ -22,11 +22,17 @@
 "use strict";
 
 var Reporter = require('../src/reporting/reporter'),
+    ConsolePublisher = require('../src/publishers/console_publisher'),
     sinon = require('sinon'),
     assert = require('assert');
 describe('Reporter', function () {
     var publisher1 = sinon.stub();
     var publisher2 = sinon.stub();
+    var clock;
+
+    beforeEach(function () {
+        clock = sinon.useFakeTimers();
+    });
 
     describe("#Reporter()", function () {
         it("should construct a stopped instance with associated publishers and default config", function () {
@@ -69,6 +75,20 @@ describe('Reporter', function () {
             var oldTimer = r._timer;
             r.start();
             assert.equal(r._timer, oldTimer);
+        });
+
+        it('should publish metrics based on the supplied interval', function () {
+            var publisherMock = {
+                publishMetrics: function () {}
+            };
+            var publishMetricsSpy = sinon.spy(publisherMock, "publishMetrics");
+
+            var r = new Reporter([publisherMock, publisherMock], 30000);
+            r.start();
+            clock.tick(60010);
+
+            var spyCall = publishMetricsSpy.callCount;
+            assert.equal(spyCall, 4);
         });
     });
 

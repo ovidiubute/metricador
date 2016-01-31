@@ -30,7 +30,7 @@
  * @constructor
  */
 var Reporter = function (publishers, runInterval, runCallback) {
-    this._runInterval = runInterval > 1000 ? runInterval : 30000;
+    this._runInterval = (runInterval && runInterval > 1000) ? runInterval : 30000;
     this._isRunning = false;
     this._timer = null;
     this._publishers = publishers;
@@ -43,14 +43,15 @@ var Reporter = function (publishers, runInterval, runCallback) {
  */
 Reporter.prototype.start = function () {
     var self = this;
-    if (this._isRunning == false) {
-        this._isRunning = true;
-        this._timer = setInterval(function () {
+
+    if (self._isRunning == false) {
+        self._isRunning = true;
+        self._timer = setInterval(function () {
             self._publishers.forEach(function (publisher) {
                 publisher.publishMetrics();
             });
             self._runCallback();
-        }, this._runInterval);
+        }, self._runInterval);
     }
 };
 
