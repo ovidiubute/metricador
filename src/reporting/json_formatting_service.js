@@ -24,6 +24,13 @@
 var Gauge = require('../metrics/gauge'),
     Histogram = require('../metrics/histogram');
 
+/**
+ * This service reunites all metric specific JSON formatters and provides an easy function call to
+ * instantly format any metric to the desired format.
+ * @param {MetricJsonFormatter} histogramJsonFormatter
+ * @param {MetricJsonFormatter} gaugeJsonFormatter
+ * @constructor
+ */
 var JsonFormattingService = function (histogramJsonFormatter, gaugeJsonFormatter) {
     this._formatters = {
         'Histogram': histogramJsonFormatter,
@@ -31,6 +38,13 @@ var JsonFormattingService = function (histogramJsonFormatter, gaugeJsonFormatter
     }
 };
 
+/**
+ * Format a compatible metric to a JSON ready object.
+ * @param metricName Name of the metric as specified in a registry
+ * @param metricInstance Instance of Metric
+ * @return {object} A JSON serialization ready object where the keys are the names of the metrics and the values
+ * are the internal values
+ */
 JsonFormattingService.prototype.formatMetric = function (metricName, metricInstance) {
     var input = {
         name: metricName,

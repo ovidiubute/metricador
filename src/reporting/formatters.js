@@ -1,6 +1,6 @@
 /*
  * The MIT License (MIT)
- * Copyright (c) 2015 Ovidiu Bute ovidiu.bute@gmail.com
+ * Copyright (c) 2016 Ovidiu Bute ovidiu.bute@gmail.com
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy of this software
  *  and associated documentation files (the "Software"), to deal in the Software without
@@ -19,17 +19,12 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
-/**
- * Abstract class designed to format a Metric instance to a custom representation (JSON, CSV, binary, etc.)
- * @constructor
- */
-var MetricFormatter = function () {
-};
+"use strict";
 
-/**
- * Formats an instance of Metric to the desired representation
- */
-MetricFormatter.prototype.format = function () {
-};
+var CounterJsonFormatter = require('./counter_json_formatter'),
+    HistogramJsonFormatter = require('./histogram_json_formatter');
 
-module.exports = MetricFormatter;
+module.exports = {
+    counter: CounterJsonFormatter,
+    histogram: HistogramJsonFormatter
+};

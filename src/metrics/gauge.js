@@ -19,18 +19,34 @@
  * DEALINGS IN THE SOFTWARE.
  */
 
+/**
+ * A Gauge holds a single, instantaneous value.
+ * @param {number} initialValue Initial value
+ * @constructor
+ */
 var Gauge = function(initialValue) {
     this.value = initialValue || 0;
 };
 
+/**
+ * Set a new value for the Gauge
+ * @param {number} newValue New value
+ */
 Gauge.prototype.setValue = function (newValue) {
     this.value = newValue;
 };
 
+/**
+ * Return the value of the Gauge
+ * @return {number} Gauge value
+ */
 Gauge.prototype.getValue = function () {
     return this.value;
 };
 
+/**
+ * Sets the internal value of the Gauge back to 0
+ */
 Gauge.prototype.clear = function () {
     this.value = 0;
 };

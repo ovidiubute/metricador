@@ -21,15 +21,23 @@
 
 "use strict";
 
-var util = require('util');
-var MeterPublisher = require('./publisher');
+var util = require('util'),
+    JsonPublisher = require('./json_publisher');
 
-var GraphitePublisher = function (graphiteClient) {
-    MeterPublisher.call(this);
+/**
+ * Publish metrics to a Graphite server.
+ * @param {MetricRegistry} metricRegistry The registry that stores all metrics.
+ * @param {JsonFormattingService} jsonFormattingService Service that handles the serialization to JSON
+ * @param graphiteClient Client connected to a Graphite server
+ * @constructor
+ */
+var GraphitePublisher = function (metricRegistry, jsonFormattingService, graphiteClient) {
     this.client = graphiteClient;
+    var self = this;
+    JsonPublisher.call(this, metricRegistry, jsonFormattingService, function (data) {
+        self.client.write(data.raw);
+    });
 };
-util.inherits(GraphitePublisher, MeterPublisher);
+util.inherits(GraphitePublisher, JsonPublisher);
 
-GraphitePublisher.prototype.publishMetrics = function () {
-
-};
+module.exports = GraphitePublisher;

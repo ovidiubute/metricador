@@ -41,15 +41,15 @@ describe('JsonPublisher', function () {
     });
 
     describe('#publishMetrics()', function () {
-        it('should publish all registered metrics', function () {
+        it('should publish all registered metrics with a JSON serialized callback', function () {
             var data;
             var publisher = new ConsoleJsonPublisher(registry, jsonService, function (input) {
-                data = input;
+                data = input.serialized;
             });
 
             publisher.publishMetrics();
 
-            assert.deepEqual(data, JSON.stringify({
+            assert.equal(data, JSON.stringify({
                 "Namespace.B.hits": 0,
                 "Namespace.C.hits": 0,
                 "Controller.XYZ.response.times.0_100": 0,
@@ -59,6 +59,26 @@ describe('JsonPublisher', function () {
                 "Controller.XYZ.response.times.1000_1500": 0,
                 "Controller.XYZ.response.times.1500_Inf": 0
             }));
+        });
+
+        it('should publish all registered metrics with an object callback', function () {
+            var data;
+            var publisher = new ConsoleJsonPublisher(registry, jsonService, function (input) {
+                data = input.raw;
+            });
+
+            publisher.publishMetrics();
+
+            assert.deepEqual(data, {
+                "Namespace.B.hits": 0,
+                "Namespace.C.hits": 0,
+                "Controller.XYZ.response.times.0_100": 0,
+                "Controller.XYZ.response.times.100_250": 0,
+                "Controller.XYZ.response.times.250_500": 0,
+                "Controller.XYZ.response.times.500_1000": 0,
+                "Controller.XYZ.response.times.1000_1500": 0,
+                "Controller.XYZ.response.times.1500_Inf": 0
+            });
         });
     });
 });

@@ -24,13 +24,18 @@
 var EventEmitter = require('events').EventEmitter;
 var util = require('util');
 
-var MeterPublisher = function (metricRegistry) {
+/**
+ * Metric publisher abstract class. Extend this to publish to specific services: console, Graphite, Zabbix, etc.
+ * @param {MetricRegistry} metricRegistry Registry that stores all metrics
+ * @constructor
+ */
+var MetricPublisher = function (metricRegistry) {
     EventEmitter.call(this);
     this.metricRegistry = metricRegistry;
 };
-util.inherits(MeterPublisher, EventEmitter);
+util.inherits(MetricPublisher, EventEmitter);
 
-MeterPublisher.prototype.publishMetrics = function () {
+MetricPublisher.prototype.publishMetrics = function () {
 };
 
-module.exports = MeterPublisher;
+module.exports = MetricPublisher;

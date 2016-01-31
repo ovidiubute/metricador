@@ -21,12 +21,21 @@
 
 "use strict";
 
-var util = require('util');
-var JsonPublisher = require('./json_publisher');
+var util = require('util'),
+    JsonPublisher = require('./json_publisher');
 
+/**
+ * This publisher writes to the console as an extension to the Json publisher. It writes all metrics in
+ * JSON representation.
+ * @param {MetricRegistry} metricRegistry Registry that holds all the metrics
+ * @param {JsonFormattingService} jsonFormattingService Service that handles the serialization of the metrics
+ * @param {function} [publishCallback] The callback that is used to write the data. This defaults to console.log(data)
+ * but it can be replaced with anything. Useful during unit-tests.
+ * @constructor
+ */
 var ConsoleJsonPublisher = function (metricRegistry, jsonFormattingService, publishCallback) {
     JsonPublisher.call(this, metricRegistry, jsonFormattingService, publishCallback || function (data) {
-        console.log(data);
+        console.log(data.serialized);
     });
 };
 util.inherits(ConsoleJsonPublisher, JsonPublisher);

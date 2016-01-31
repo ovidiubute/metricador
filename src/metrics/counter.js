@@ -26,7 +26,7 @@ var util = require('util'),
 
 /**
  * Counter used to store a single, unsigned, integer value and provide functions to increment or decrement it.
- * @param {number} [initialValue]
+ * @param {number} [initialValue] Starting value for Counter
  * @constructor
  */
 var Counter = function Counter(initialValue) {
@@ -34,8 +34,13 @@ var Counter = function Counter(initialValue) {
 };
 util.inherits(Counter, Gauge);
 
-Counter.prototype.incrementAndGet = function (val) {
-    this.value += val;
+/**
+ * Increments the internal value and returns it. The value cannot exceed 2^32 and will overflow to 1 when needed.
+ * @param {number} [value] Value to increment with, or 1 will be used
+ * @return {number} New Counter value
+ */
+Counter.prototype.incrementAndGet = function (value) {
+    this.value += value || 1;
 
     // Wrap counter if necessary.
     if (this.value > Math.pow(2, 32)) {
@@ -45,8 +50,13 @@ Counter.prototype.incrementAndGet = function (val) {
     return this.value;
 };
 
-Counter.prototype.decrementAndGet = function (val) {
-    this.value -= val;
+/**
+ * Decrements the internal value and returns it. The value cannot go below 0 and will reset to 0 when needed.
+ * @param {number} [value] Value to decrement with, or 1 will be used
+ * @return {number} New Counter value
+ */
+Counter.prototype.decrementAndGet = function (value) {
+    this.value -= value || 1;
 
     // Prevent counter from being decremented below zero.
     if (this.value < 0) {

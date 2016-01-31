@@ -23,6 +23,18 @@
 
 var DEFAULT_INTERVALS = [0, 100, 250, 500, 1000, 1500, Infinity];
 
+/**
+ * A Histogram stores multiple counters within specified closed intervals.
+ * Given a value interval of [a, b, c, d], the Histogram will internally store all of values based on the first bucket
+ * for which the function: x >= 0 --> a <= x <= b is true. In this example x will be stored in the interval [a, b].
+ * Thus the value of the [a, b] interval is now 1. Any subsequent update in the same interval will increment the value.
+ * Note that internally the first interval will always be set to [0, a] and the last interval will be set to
+ * [x, Infinity].
+ *
+ * @param {Array} [valueIntervals] The closed intervals on which the values will be stored. A default set of intervals
+ * will be set if this parameter is omitted.
+ * @constructor
+ */
 var Histogram = function Histogram(valueIntervals) {
     valueIntervals = valueIntervals || DEFAULT_INTERVALS;
 
@@ -47,16 +59,28 @@ var Histogram = function Histogram(valueIntervals) {
     });
 };
 
+/**
+ * Reset all values back to 0.
+ */
 Histogram.prototype.clear = function () {
     this._values = this._values.map(function () {
         return 0;
     });
 };
 
+/**
+ * Return the current intervals.
+ * @return {Array} List of intervals in the form of [ [a, b], [b, c], [c, d] ]
+ */
 Histogram.prototype.getIntervals = function () {
     return this._valueIntervals;
 };
 
+/**
+ * Update the histogram with a new value.
+ * @param {number} value Value to update with
+ * @return {number} Returns the internal Histogram value after the new value has been added.
+ */
 Histogram.prototype.update = function (value) {
     var index = 0;
     for (var i = 0; i < this._valueIntervals.length; i++) {
@@ -69,7 +93,18 @@ Histogram.prototype.update = function (value) {
     return this._values[index] += 1;
 };
 
+/**
+ * Returns the value stored within an interval. This interval must already exist on the Histogram.
+ * @param {number} intervalLow Left limit of interval
+ * @param {number} intervalHigh Right limit of interval
+ * @return {number} Histogram value
+ * @throws Error If intervalLow is a negative integer
+ */
 Histogram.prototype.getValue = function (intervalLow, intervalHigh) {
+    if (intervalLow < 0) {
+        throw new Error('Left limit of interval must be a positive integer!');
+    }
+
     var value = 0;
     var idx = 0,
         self = this,

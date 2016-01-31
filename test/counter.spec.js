@@ -51,7 +51,12 @@ describe('Counter', function () {
     });
 
     describe('#incrementAndGet()', function () {
-        it('should increment its internal value', function () {
+        it('should increment its interval value by 1', function () {
+            assert.equal(counter.incrementAndGet(), 1);
+            assert.equal(counter.incrementAndGet(), 2);
+        });
+
+        it('should increment its internal value by the provided amount', function () {
             assert.equal(counter.incrementAndGet(5), 5);
             assert.equal(counter.incrementAndGet(5), 10);
         });
@@ -70,7 +75,13 @@ describe('Counter', function () {
             assert.equal(counter.decrementAndGet(3), 0);
         });
 
-        it('should decrement its internal value', function () {
+        it('should decrement its interval value by 1', function () {
+            counter.incrementAndGet(5);
+            assert.equal(counter.decrementAndGet(), 4);
+            assert.equal(counter.decrementAndGet(), 3);
+        });
+
+        it('should decrement its internal value by the provided amount', function () {
             counter.incrementAndGet(5);
             assert.equal(counter.decrementAndGet(3), 2);
             assert.equal(counter.decrementAndGet(1), 1);

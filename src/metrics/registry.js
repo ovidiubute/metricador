@@ -40,10 +40,20 @@ MetricRegistry.prototype.gauge = function (name) {
     return this._buildMetric(name, Gauge);
 };
 
+/**
+ * Gets one single Metric from the registry by provided name.
+ * @param metricName Name of the Metric
+ * @return {object|undefined} Metric instance, undefined if not found
+ */
 MetricRegistry.prototype.getMetric = function (metricName) {
     return this._metrics[metricName];
 };
 
+/**
+ * Get metrics from the registry, optionally filtered by a name pattern.
+ * @param {string} [metricPattern] Name pattern to search for metrics
+ * @return {object} Dictionary where the key is the metric name and the value is the actual Metric instance
+ */
 MetricRegistry.prototype.getMetrics = function (metricPattern) {
     if (metricPattern) {
         var self = this;
@@ -86,6 +96,14 @@ MetricRegistry.prototype.register = function (metric, name) {
     }
 };
 
+/**
+ * Internal function used to construct new Metric instances and register them to the Registry.
+ * @param {string} name Metric name
+ * @param {function} constructor Metric constructor function
+ * @return {object} Metric instance
+ * @throws Error If name already exists within the Registry
+ * @private
+ */
 MetricRegistry.prototype._buildMetric = function (name, constructor) {
     if (!this._metrics.hasOwnProperty(name)) {
         var c = new constructor();

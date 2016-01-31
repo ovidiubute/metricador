@@ -22,6 +22,10 @@
 var util = require('util'),
     MetricFormatter = require('./metric_formatter');
 
+/**
+ * Abstract formatter to JSON compatible objects
+ * @constructor
+ */
 var MetricJsonFormatter = function () {
     MetricFormatter.call(this);
 };

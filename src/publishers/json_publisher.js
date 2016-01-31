@@ -21,17 +21,30 @@
 
 "use strict";
 
-var util = require('util');
-var MeterPublisher = require('./publisher'),
+var util = require('util'),
+    MetricPublisher = require('./publisher'),
     utility = require('../util/utility');
 
+/**
+ * An abstract publisher that serializes metrics to JSON before being sent to services.
+ * @param {MetricRegistry} metricRegistry The registry that stores all metrics.
+ * @param {JsonFormattingService} jsonFormattingService Service that handles the serialization to JSON
+ * @param {function} publishCallback Callback through which metrics are sent via protocol specific implementations
+ * The callback takes one parameter, an object with two attributes:
+ * 'raw': the pre-serialization representation of all metrics from the registry,
+ * 'serialized': the result of calling JSON.stringify on the 'raw' value
+ * @constructor
+ */
 var JsonPublisher = function (metricRegistry, jsonFormattingService, publishCallback) {
-    MeterPublisher.call(this, metricRegistry);
+    MetricPublisher.call(this, metricRegistry);
     this.jsonFormattingService = jsonFormattingService;
     this.publishCallback = publishCallback;
 };
-util.inherits(JsonPublisher, MeterPublisher);
+util.inherits(JsonPublisher, MetricPublisher);
 
+/**
+ * Publish metrics, effectively serializing metrics from the registry and calling the publishCallback with the data.
+ */
 JsonPublisher.prototype.publishMetrics = function () {
     var allMetrics = this.metricRegistry.getNames(),
         self = this;
@@ -43,7 +56,7 @@ JsonPublisher.prototype.publishMetrics = function () {
         );
     });
 
-    this.publishCallback.call(null, JSON.stringify(result));
+    this.publishCallback.call(null, {raw: result, serialized: JSON.stringify(result)});
 };
 
 module.exports = JsonPublisher;
