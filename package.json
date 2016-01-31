@@ -7,7 +7,7 @@
     "url": "git://github.com/ovidiubute/metricador.git"
   },
   "scripts": {
-    "test": "istanbul cover node_modules/mocha/bin/_mocha -- -R spec && ./node_modules/codecov.io/bin/codecov"
+    "test": "istanbul cover node_modules/mocha/bin/_mocha -- -R spec && ./node_modules/codecov/bin/codecov"
   },
   "author": "Ovidiu Bute <ovidiu.bute@gmail.com>",
   "license": "MIT",
