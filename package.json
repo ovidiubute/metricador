@@ -7,7 +7,7 @@
     "url": "git://github.com/ovidiubute/metricador.git"
   },
   "scripts": {
-    "test": "istanbul cover node_modules/mocha/bin/_mocha -- -R spec"
+    "test": "istanbul cover node_modules/mocha/bin/_mocha -- -R spec && ./node_modules/codecov.io/bin/codecov"
   },
   "author": "Ovidiu Bute <ovidiu.bute@gmail.com>",
   "license": "MIT",
@@ -19,6 +19,7 @@
     "zabbix-sender": "^0.2.0"
   },
   "devDependencies": {
+    "codecov": "^1.0.1",
     "istanbul": "^0.4.2",
     "mocha": "^2.3.4",
     "sinon": "^1.17.3"
