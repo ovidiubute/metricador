@@ -21,34 +21,64 @@
 
 "use strict";
 
-var Reporter = function (pollingRate, publishers) {
-    this.pollingRate = pollingRate;
-    this.running = false;
-    this.timer = null;
-    this.publishers = publishers;
+/**
+ * A reporter instance will periodically ask all publishers to publish the data from their metric registries
+ * to their configured endpoint.
+ * @param {Array} publishers List of publisher instances
+ * @param {number} [runInterval] How often to publish, in milliseconds, defaults to 30 seconds, cannot be lower than 1s
+ * @param {function} [runCallback] Callback that is called after each run finishes, by default a noop function is called
+ * @constructor
+ */
+var Reporter = function (publishers, runInterval, runCallback) {
+    this._runInterval = runInterval > 1000 ? runInterval : 30000;
+    this._isRunning = false;
+    this._timer = null;
+    this._publishers = publishers;
+    this._runCallback = runCallback || function () {};
 };
 
+/**
+ * Start the Reporter, it will call publishers at configured interval. Can only be called if Reporter is not
+ * already running.
+ */
 Reporter.prototype.start = function () {
     var self = this;
-    if (this.running = false) {
-        this.running = true;
-        this.timer = setInterval(function () {
-            self.publishers.forEach(function (publisher) {
+    if (this._isRunning == false) {
+        this._isRunning = true;
+        this._timer = setInterval(function () {
+            self._publishers.forEach(function (publisher) {
                 publisher.publishMetrics();
             });
-        }, this.pollingRate);
+            self._runCallback();
+        }, this._runInterval);
     }
 };
 
+/**
+ * Stop the publish loop. Can only be called on a started Reporter.
+ */
 Reporter.prototype.stop = function () {
-    if (this.timer) {
-        clearInterval(this.timer);
-        this.running = false;
+    if (this._isRunning && this._timer) {
+        clearInterval(this._timer);
+        this._isRunning = false;
+        this._timer = null;
     }
 };
 
+/**
+ * Check if Reporter has started its publish loop
+ * @return {boolean} True if Reporter has started, False otherwise
+ */
 Reporter.prototype.isRunning = function () {
-    return this.running;
+    return this._isRunning;
+};
+
+/**
+ * Returns the interval at which the publishers are called
+ * @return {number} Running interval, in milliseconds
+ */
+Reporter.prototype.getRunInterval = function () {
+    return this._runInterval;
 };
 
 module.exports = Reporter;
