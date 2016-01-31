@@ -22,7 +22,6 @@
 "use strict";
 
 var Reporter = require('../src/reporting/reporter'),
-    ConsolePublisher = require('../src/publishers/console_publisher'),
     sinon = require('sinon'),
     assert = require('assert');
 describe('Reporter', function () {
