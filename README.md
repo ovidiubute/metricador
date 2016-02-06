@@ -6,8 +6,8 @@ Core library to add performance metrics to your Node.js application.
 
 # Usage
 
+Top level of your app:
 ```javascript
-// Top level of your app
 var metricador = require('metricador');
 
 var metricRegistry = metricador.registry;
@@ -15,8 +15,10 @@ var metricPublishers = [
   metricador.publishers.console.json.get(registry)
 ];
 var metricReporter = new metricador.Reporter(metricPublishers);
+```
 
-// Inside a controller
+Inside one of your app controllers:
+```javascript
 var metricador = require('metricador');
 
 var metricRegistry = metricador.registry;
@@ -24,6 +26,11 @@ var hitCounter = metricRegistry.counter("myapp.controllers.registration.hits");
 
 // ...Business logic...
 hitCounter.incrementAndGet();
+```
+
+Every 30 seconds the reporter will output something similar to the standard console:
+```javascript
+{ 'myapp.controllers.registration.hits': 3401 }
 ```
 
 # License
