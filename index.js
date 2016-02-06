@@ -36,5 +36,5 @@ module.exports = {
     },
     registry: new MetricRegistry(),
     publishers: PublisherFactory,
-    reporter: Reporter
+    Reporter: Reporter
 };
