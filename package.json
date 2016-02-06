@@ -1,16 +1,31 @@
 {
   "name": "metricador",
-  "description": "An all-in-one solution to add performance metrics to your Node.js application.",
-  "version": "0.3.0",
+  "description": "Core library to add performance metrics to your Node.js application.",
+  "version": "0.3.1",
   "repository": {
     "type": "git",
     "url": "git://github.com/ovidiubute/metricador.git"
   },
+  "main": "index.js",
   "scripts": {
-    "test": "istanbul cover node_modules/mocha/bin/_mocha -- -R spec && ./node_modules/codecov/bin/codecov"
+    "test": "node_modules/mocha/bin/_mocha -- -R spec",
+    "test-codecov": "istanbul cover node_modules/mocha/bin/_mocha -- -R spec && ./node_modules/codecov/bin/codecov"
   },
+  "keywords": [
+    "metrics",
+    "performance",
+    "counter",
+    "histogram",
+    "graphite",
+    "zabbix"
+  ],
   "author": "Ovidiu Bute <ovidiu.bute@gmail.com>",
-  "license": "MIT",
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/ovidiubute/metricador/blob/master/LICENSE"
+    }
+  ],
   "engines": {
     "node": ">=0.12.x"
   },
