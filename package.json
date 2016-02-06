@@ -10,7 +10,8 @@
   "scripts": {
     "test": "mocha --reporter spec --bail --check-leaks test/",
     "test-cov": "istanbul cover node_modules/mocha/bin/_mocha -- --reporter dot --check-leaks test/",
-    "test-codecov": "istanbul cover node_modules/mocha/bin/_mocha -- -R spec && ./node_modules/codecov/bin/codecov"
+    "test-codecov": "istanbul cover node_modules/mocha/bin/_mocha -- -R spec && ./node_modules/codecov/bin/codecov",
+    "lint": "jshint *.js"
   },
   "keywords": [
     "metrics",
@@ -37,6 +38,8 @@
   "devDependencies": {
     "codecov": "^1.0.1",
     "istanbul": "^0.4.2",
+    "jsdoc": "^3.4.0",
+    "jshint": "^2.9.1",
     "mocha": "^2.3.4",
     "sinon": "^1.17.3"
   }
