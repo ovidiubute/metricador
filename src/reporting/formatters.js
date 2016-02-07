@@ -25,6 +25,6 @@ var CounterJsonFormatter = require('./counter_json_formatter'),
     HistogramJsonFormatter = require('./histogram_json_formatter');
 
 module.exports = {
-    counter: CounterJsonFormatter,
-    histogram: HistogramJsonFormatter
+    counter: new CounterJsonFormatter(),
+    histogram: new HistogramJsonFormatter()
 };
