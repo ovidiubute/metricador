@@ -14,7 +14,8 @@ var MetricRegistry = function () {
 };
 
 /**
- * Builds a new Counter with the given name and adds it to the registry
+ * Builds a new Counter with the given name and adds it to the registry OR returns
+ * an already registered Counter with the given name.
  * @param {string} name Name of the Counter
  * @return {Counter} Counter instance
  */
@@ -23,7 +24,8 @@ MetricRegistry.prototype.counter = function (name) {
 };
 
 /**
- * Builds a new Histogram with the given name and adds it to the registry
+ * Builds a new Histogram with the given name and adds it to the registry OR returns
+ * an already registered Histogram with the given name.
  * @param {string} name Name of the Histogram
  * @return {Histogram} Histogram instance
  */
@@ -32,7 +34,8 @@ MetricRegistry.prototype.histogram = function (name) {
 };
 
 /**
- * Builds a new Gauge with the given name and adds it to the registry
+ * Builds a new Gauge with the given name and adds it to the registry OR returns
+ * an already registered Gauge with the given name.
  * @param {string} name Name of the Counter
  * @return {Gauge} Gauge instance
  */
@@ -101,7 +104,6 @@ MetricRegistry.prototype.register = function (metric, name) {
  * @param {string} name Metric name
  * @param {function} constructor Metric constructor function
  * @return {object} Metric instance
- * @throws Error If name already exists within the Registry
  * @private
  */
 MetricRegistry.prototype._buildMetric = function (name, constructor) {
@@ -110,7 +112,7 @@ MetricRegistry.prototype._buildMetric = function (name, constructor) {
         this._metrics[name] = c;
         return c;
     } else {
-        throw new Error(util.format('A metric with this name <%s> has already been registered!', name));
+        return this._metrics[name];
     }
 };
 
