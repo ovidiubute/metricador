@@ -4,4 +4,4 @@ node_js:
   - "4.0"
   - "0.12"
 script:
-  - bundle exec npm run test-codecov
+  - npm run test-codecov
