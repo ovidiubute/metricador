@@ -1,7 +1,7 @@
 {
   "name": "metricador",
   "description": "Core library to add performance metrics to your Node.js application.",
-  "version": "0.3.7",
+  "version": "0.3.8",
   "repository": {
     "type": "git",
     "url": "git://github.com/ovidiubute/metricador.git"
