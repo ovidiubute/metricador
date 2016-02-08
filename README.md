@@ -1,4 +1,4 @@
-[![CircleCI](https://img.shields.io/circleci/project/ovidiubute/metricador.svg)](https://img.shields.io/circleci/project/ovidiubute/metricador.svg)
+[![Build Status](https://travis-ci.org/ovidiubute/metricador.svg?branch=master)](https://travis-ci.org/ovidiubute/metricador)
 [![codecov.io](https://codecov.io/github/ovidiubute/metricador/coverage.svg?branch=master)](https://codecov.io/github/ovidiubute/metricador?branch=master)
 [![david-dm](https://david-dm.org/ovidiubute/metricador.svg)](https://david-dm.org/ovidiubute/metricador.svg)
 [![Inline docs](http://inch-ci.org/github/ovidiubute/metricador.svg?branch=master)](http://inch-ci.org/github/ovidiubute/metricador)
